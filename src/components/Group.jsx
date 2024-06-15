@@ -1,26 +1,47 @@
 import { ArrowRight, Trash2 } from "lucide-react";
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { REMOVE_GROUP, SET_GROUP_RANGE } from "../redux/group/action";
 
-const Group = ({ name, to, from, index, status }) => {
+const Group = ({ name, to, from, index, status, setDisabled }) => {
   let dispatch = useDispatch();
+  let groups = useSelector((store) => store.groupReducer);
   let handleChange = (renge, value, index) => {
+    if (value < 1 || value > 10) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    dispatch({ type: SET_GROUP_RANGE, payload: { renge, index, value } });
+    if (index > 0) {
+      let checkValid = groups[index - 1].to >= groups[index].from;
+      if (checkValid) {
+        setDisabled(true);
+      } else if (groups[index].from - groups[index - 1].to == 1) {
+        setDisabled(false);
+      }
+    }
     // console.log(`range - ${renge}, value - ${value}, index - ${index}`);
-    if (renge === "from") {
-      if (value >= 1 && value <= 10) {
-        dispatch({ type: SET_GROUP_RANGE, payload: { renge, index, value } });
-      } else {
-        alert("enter between 1 to 10");
-      }
-    }
-    if (renge === "to") {
-      if (value >= 1 && value <= 10) {
-        dispatch({ type: SET_GROUP_RANGE, payload: { renge, index, value } });
-      } else {
-        alert("enter between 1 to 10");
-      }
-    }
+    // if (renge === "from") {
+    //   if (value >= 1 && value <= 10) {
+    //     dispatch({ type: SET_GROUP_RANGE, payload: { renge, index, value } });
+
+    //     if (index > 0) {
+    //       let checkValid = groups[index - 1].to >= groups[index].from;
+    //       checkValid && setDisabled(true);
+    //       console.log(groups[index - 1].to,groups[index].from)
+    //     }
+    //   } else {
+    //     alert("enter between 1 to 10");
+    //   }
+    // }
+    // if (renge === "to") {
+    //   if (value >= 1 && value <= 10) {
+    //     dispatch({ type: SET_GROUP_RANGE, payload: { renge, index, value } });
+    //   } else {
+    //     alert("enter between 1 to 10");
+    //   }
+    // }
   };
 
   return (

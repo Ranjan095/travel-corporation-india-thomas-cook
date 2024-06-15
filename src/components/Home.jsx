@@ -6,6 +6,7 @@ import { ADD_GROUP, SHOW_STATUS, getStatus } from "../redux/group/action";
 
 const Home = () => {
   let [state, setState] = useState([]);
+  let [isDisabled, setDisabled] = useState(false);
   let dispatch = useDispatch();
   let group = useSelector((store) => store.groupReducer);
 
@@ -28,7 +29,13 @@ const Home = () => {
           <div>
             {state?.map((ele, i) => {
               return (
-                <Group key={i} index={i} name={`Group ${i + 1}`} {...ele} />
+                <Group
+                  key={i}
+                  index={i}
+                  name={`Group ${i + 1}`}
+                  setDisabled={setDisabled}
+                  {...ele}
+                />
               );
             })}
           </div>
@@ -49,8 +56,11 @@ const Home = () => {
           </div>
           <div>
             <button
+              disabled={isDisabled}
               onClick={handleShowStatus}
-              className="bg-blue-600 p-2 font-bold text-white rounded-md hover:bg-blue-600/80"
+              className={`bg-blue-600 p-2 font-bold text-white rounded-md hover:bg-blue-600/80 ${
+                isDisabled && "bg-gray-300 hover:bg-gray-300"
+              } ${isDisabled && "cursor-not-allowed"}`}
             >
               Show Status
             </button>
