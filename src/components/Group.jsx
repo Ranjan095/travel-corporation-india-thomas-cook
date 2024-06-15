@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { REMOVE_GROUP, SET_GROUP_RANGE } from "../redux/group/action";
 
-const Group = ({ name, to, from, index,status }) => {
+const Group = ({ name, to, from, index, status }) => {
   let dispatch = useDispatch();
   let handleChange = (renge, value, index) => {
     // console.log(`range - ${renge}, value - ${value}, index - ${index}`);
@@ -33,7 +33,9 @@ const Group = ({ name, to, from, index,status }) => {
           <Trash2 className="text-blue-600 " />
         </button>
         <div className=" flex border border-gray-500">
-          <p className=" bg-gray-200  p-2 text-gray-500">{name}</p>
+          <div className="bg-gray-200 p-2 flex justify-center items-center">
+            <p className="text-gray-500">{name}</p>
+          </div>
           <input
             onChange={(e) => handleChange("from", e.target.value, index)}
             type="number"
@@ -55,7 +57,9 @@ const Group = ({ name, to, from, index,status }) => {
           />
         </div>
       </div>
-      <div className=" border border-gray-500 w-[50%] bg-gray-200 p-2">{status}</div>
+      <div className=" border border-gray-500 w-[50%] bg-gray-200 p-2">
+        {status}
+      </div>
     </div>
   );
 };
