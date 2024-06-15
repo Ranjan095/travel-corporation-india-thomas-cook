@@ -55,7 +55,7 @@ const Group = ({ name, to, from, index,status }) => {
           />
         </div>
       </div>
-      <div className=" border border-gray-500 min-w-[50%] bg-gray-200">{status}</div>
+      <div className=" border border-gray-500 w-[50%] bg-gray-200 p-2">{status}</div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   ADD_GROUP,
+  FETCH_STATUS_SUCCESS,
   REMOVE_GROUP,
   SET_GROUP_RANGE,
   SHOW_STATUS,
@@ -18,7 +19,7 @@ let initialState = [
 let groupReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_GROUP: {
-      return [...state, { from: "", to: "" }];
+      return [...state, { from: "", to: "", status: [] }];
     }
 
     case REMOVE_GROUP: {
@@ -53,8 +54,17 @@ let groupReducer = (state = initialState, { type, payload }) => {
 
       return newData;
     }
-    case SHOW_STATUS: {
-      return state;
+    case FETCH_STATUS_SUCCESS: {
+      // console.log(payload);
+      let newData = state.map((ele, i) => {
+        if (i === payload?.group) {
+          ele?.status?.push(`(${payload?.id}) ${payload?.status}, `);
+          return ele;
+        } else {
+          return ele;
+        }
+      });
+      return newData;
     }
 
     default: {
