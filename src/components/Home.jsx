@@ -2,12 +2,16 @@ import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Group from "./Group";
-import { ADD_GROUP } from "../redux/group/action";
+import { ADD_GROUP, SHOW_STATUS } from "../redux/group/action";
 
 const Home = () => {
   let [state, setState] = useState([]);
   let dispatch = useDispatch();
   let group = useSelector((store) => store.groupReducer);
+
+  let handleShowStatus = () => {
+    dispatch({ type: SHOW_STATUS });
+  };
 
   useEffect(() => {
     setState(group);
@@ -24,7 +28,7 @@ const Home = () => {
           <div>
             {state?.map((ele, i) => {
               return (
-                <Group key={i} index={i} name={`Group - ${i + 1}`} {...ele} />
+                <Group key={i} index={i} name={`Group ${i + 1}`} {...ele} />
               );
             })}
           </div>
@@ -44,7 +48,10 @@ const Home = () => {
             </span>
           </div>
           <div>
-            <button className="bg-blue-600 p-2 font-bold text-white rounded-md hover:bg-blue-600/80">
+            <button
+              onClick={handleShowStatus}
+              className="bg-blue-600 p-2 font-bold text-white rounded-md hover:bg-blue-600/80"
+            >
               Show Status
             </button>
           </div>

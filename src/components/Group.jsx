@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { REMOVE_GROUP, SET_GROUP_RANGE } from "../redux/group/action";
 
-const Group = ({ name, to, from, index }) => {
+const Group = ({ name, to, from, index,status }) => {
   let dispatch = useDispatch();
   let handleChange = (renge, value, index) => {
     // console.log(`range - ${renge}, value - ${value}, index - ${index}`);
@@ -55,7 +55,7 @@ const Group = ({ name, to, from, index }) => {
           />
         </div>
       </div>
-      <div className=" border border-gray-500 min-w-[50%] bg-gray-200"></div>
+      <div className=" border border-gray-500 min-w-[50%] bg-gray-200">{status}</div>
     </div>
   );
 };
